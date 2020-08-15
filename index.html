@@ -1,0 +1,89 @@
+﻿<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<br />
+<body>
+
+	<div id="app">
+		<br>
+		<div class="text-center">
+			<input type="text" v-model="namemovie" placeholder="film ara" />
+		
+			<button v-on:click="btnmovie">ara</button>
+	
+		</div>
+	
+		<br>
+		<div class="text-center" >
+			<h6 v-if="result">{{namemovie}} için sonuçlar</h6>
+	
+		</div>
+	
+		<div class="container" v-if="result" >
+			<div class="row justify-content-center">
+				<div class="text-center">
+					
+					<div class="text-center">
+						<div class="card" style="width: 18rem;">
+							<img class="card-img-top" v-bind:src="result.Poster" alt="Card image cap">
+							<div class="card-body">
+							  <h5 class="card-title">{{result.Title}}</h5>
+							  <h6 class="card-title">{{result.Year}} çekilme tarihi</h5>
+							  <u class="card-text">Oyuncular</u>
+						
+							  <p class="card-text">{{result.Actors}}</p>
+							  
+							</div>
+							<ul class="list-group list-group-flush">
+								<u >Yönetmen </u>
+							  <li class="list-group-item">{{result.Director}} </li>
+							  <li class="list-group-item">{{result.imdbRating}} Imd:Puanı</li>
+							  <li class="list-group-item">{{result.Runtime}} Süre</li>
+							</ul>
+							
+						  </div>
+					</div>
+		
+				</div>
+			</div>
+		</div>
+		
+	
+
+		
+	</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+</body>
+
+
+
+<script>
+	var app = new Vue({
+		el: "#app",
+		data: {
+			namemovie: "",
+			result: false
+		},
+		methods: {
+			btnmovie() {
+		
+				var url = 'http://www.omdbapi.com/?t=' + this.namemovie + '&apikey=d67e0d65'
+				fetch(url)
+					.then(result => result.json())
+					.then(result => {
+						this.$set(this, 'result',result);
+					})
+
+
+
+			}
+
+
+		}
+	})
+</script>
